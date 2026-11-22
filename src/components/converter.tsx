@@ -565,7 +565,14 @@ export function Converter() {
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col gap-4 px-4 py-5">
       <header className="flex items-center justify-between gap-3">
         <h1 className="min-w-0 flex-1 truncate text-lg font-extrabold tracking-tight">
-          UmmamAudioConversion
+          <div className="flex flex-col leading-tight">
+            <span className="text-xl font-bold text-white">
+            thisisummam
+            </span>
+            <span className="text-xs font-bold text-gray-400">
+            Audio Playback Speed Changer
+            </span>
+          </div>
         </h1>
         <div className="flex h-11 shrink-0 items-center rounded-full border border-line bg-well p-1" role="group" aria-label="Theme">
           <button
