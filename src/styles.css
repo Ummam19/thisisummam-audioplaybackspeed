@@ -23,38 +23,61 @@
 }
 
 :root {
-  /* Dark theme: pure black surfaces */
+  /* Dark theme: pure black surfaces + electric blue glow */
   --canvas: #000000;
   --card: #000000;
-  --well: #000000;
-  --ink: #f5f7ff;
-  --muted: #a7aed0;
-  --line: #002861;
-  --dash: #002861;
+  --well: #050b16;
+  --ink: #ffffff;
+  --muted: #c5ccd8;
+  --line: #2a6adf;
+  --dash: #31486f;
 
-  /* All accent colors use one solid navy tone */
-  --accent: #002861;
-  --accent-2: #002861;
+  /* Glow & Lighting variables */
+  --panel-glow: rgba(40, 120, 255, 0.62);
+  --panel-glow-soft: rgba(24, 80, 220, 0.4);
+  --shadow-card:
+    0 0 0 1px rgba(110, 160, 255, 0.35),
+    0 0 16px var(--panel-glow),
+    0 0 36px var(--panel-glow-soft),
+    0 14px 34px rgba(12, 50, 160, 0.28);
+
+  /* Accent & Audio components */
+  --accent: #2f6bff;
+  --accent-2: #1a4ed8;
   --on-accent: #ffffff;
-  --teal: #002861;
-  --danger: #002861;
-  --track: #002861;
-  --wave-1: #002861;
-  --wave-2: #002861;
+  --teal: #2a6adf;
+  --danger: #ffb4b4;
+  --track: #17386f;
+  --wave-1: #2a6adf;
+  --wave-2: #6aa2ff;
   color-scheme: dark;
 }
 
 html.light {
-  --canvas: #e8edf7;
+  --canvas: #eef3fa;
   --card: #ffffff;
-  --well: #f3f6fb;
-  --ink: #14182c;
-  --muted: #5c6688;
-  --line: #d7deee;
-  --dash: #002861;
-  --track: #002861;
-  --wave-1: #002861;
-  --wave-2: #002861;
+  --well: #f3f7fd;
+  --ink: #0d1526;
+  --muted: #3d4d66;
+  --line: #8eb4ef;
+  --dash: #9db6dc;
+
+  /* Light mode soft glow */
+  --panel-glow: rgba(70, 130, 230, 0.22);
+  --panel-glow-soft: rgba(70, 120, 210, 0.12);
+  --shadow-card:
+    0 0 0 1px rgba(90, 140, 230, 0.2),
+    0 10px 30px rgba(30, 70, 150, 0.08),
+    0 0 24px var(--panel-glow);
+
+  --accent: #2b6bff;
+  --accent-2: #1d4fd7;
+  --on-accent: #ffffff;
+  --teal: #2b6bff;
+  --danger: #b42318;
+  --track: #c5d4ea;
+  --wave-1: #2b6bff;
+  --wave-2: #7eb0ff;
   color-scheme: light;
 }
 
@@ -82,60 +105,131 @@ html.light {
   button:disabled {
     cursor: not-allowed;
   }
+
+  button:focus-visible {
+    outline: 2px solid #6aa2ff;
+    outline-offset: 3px;
+  }
 }
 
+/* Panel dengan efek border biru menyala & outer glow */
 .panel {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: 1.35rem;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 180ms ease, border-color 180ms ease;
 }
 
-html.light .panel {
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 5%, transparent);
-}
-
+/* Angka kecepatan dengan warna aksen biru terang */
 .speed-num {
   font-variant-numeric: tabular-nums;
   background: none;
-  color: #002861;
+  color: #6aa2ff;
+  text-shadow: 0 0 16px rgba(47, 116, 255, 0.65);
 }
 
+html.light .speed-num {
+  color: #1d4ed8;
+  text-shadow: none;
+}
+
+/* Tombol Convert dengan multi-layer neon blue glow & inner highlight */
 .btn-convert {
-  background: #002861;
   color: #ffffff;
-  border: 1px solid #002861;
-  box-shadow: 0 10px 28px color-mix(in srgb, #002861 32%, transparent);
-  transition: filter 160ms ease, transform 160ms ease, opacity 160ms ease;
+  border: 1.5px solid #4d86f5;
+  background: linear-gradient(180deg, #12306a 0%, #0a1c40 46%, #071226 100%);
+  box-shadow:
+    0 0 0 1px rgba(150, 190, 255, 0.4),
+    0 0 20px rgba(50, 130, 255, 0.9),
+    0 0 48px rgba(30, 100, 255, 0.72),
+    0 0 80px rgba(20, 70, 220, 0.35),
+    inset 0 1px 0 rgba(190, 215, 255, 0.35);
+  transition:
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
 .btn-convert:not(:disabled):hover {
-  filter: brightness(1.12);
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
 .btn-convert:not(:disabled):active {
-  transform: scale(0.985);
+  transform: translateY(0) scale(0.985);
 }
 
 .btn-convert:disabled {
-  opacity: 0.42;
-  box-shadow: none;
+  opacity: 0.48;
+  box-shadow:
+    0 0 0 1px rgba(90, 140, 230, 0.2),
+    0 0 12px rgba(30, 90, 220, 0.25);
 }
 
+html.light .btn-convert {
+  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 55%, #1e40af 100%);
+  border-color: #60a5fa;
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.35),
+    0 0 18px rgba(47, 116, 255, 0.45),
+    0 8px 20px rgba(29, 78, 216, 0.25);
+}
+
+/* Tombol Download dengan glow lembut saat siap (enabled) */
 .btn-download {
+  color: #d7deea;
+  border: 1.5px solid #1c4d96;
+  background: linear-gradient(180deg, #08152c 0%, #050d1a 100%);
+  box-shadow:
+    0 0 0 1px rgba(50, 110, 210, 0.28),
+    0 0 16px rgba(20, 70, 180, 0.38),
+    0 0 32px rgba(10, 40, 140, 0.22);
+  transition:
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.btn-download:not(:disabled) {
   color: #ffffff;
-  border: 2px solid #002861;
-  background: #002861;
-  transition: filter 160ms ease, opacity 160ms ease;
+  border-color: #2c66d6;
+  box-shadow:
+    0 0 0 1px rgba(120, 170, 255, 0.3),
+    0 0 18px rgba(36, 110, 255, 0.65),
+    0 0 36px rgba(30, 90, 255, 0.38);
 }
 
 .btn-download:not(:disabled):hover {
   filter: brightness(1.12);
+  transform: translateY(-1px);
 }
 
 .btn-download:disabled {
-  opacity: 0.38;
+  opacity: 0.45;
 }
 
+html.light .btn-download {
+  color: #1a2740;
+  border-color: #c5d7f2;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8fd 100%);
+  box-shadow:
+    0 0 0 1px rgba(80, 130, 210, 0.15),
+    0 8px 22px rgba(30, 70, 150, 0.06);
+}
+
+html.light .btn-download:not(:disabled) {
+  color: #ffffff;
+  border-color: #3b82f6;
+  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.35),
+    0 0 16px rgba(47, 116, 255, 0.38);
+}
+
+/* Slider audio dengan thumb glow */
 .speed-range {
   -webkit-appearance: none;
   appearance: none;
@@ -153,7 +247,7 @@ html.light .panel {
 }
 
 .speed-range:focus-visible {
-  outline: 2px solid #002861;
+  outline: 2px solid #6aa2ff;
   outline-offset: 3px;
   border-radius: 999px;
 }
@@ -172,9 +266,19 @@ html.light .panel {
   margin-top: -8px;
   border-radius: 999px;
   background: #ffffff;
-  border: 4px solid #002861;
-  box-shadow: 0 0 0 5px color-mix(in srgb, #002861 28%, transparent);
+  border: 3px solid #2a6adf;
+  box-shadow:
+    0 0 0 4px rgba(47, 116, 255, 0.3),
+    0 0 14px rgba(70, 140, 255, 0.85);
   cursor: pointer;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.speed-range::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 5px rgba(47, 116, 255, 0.4),
+    0 0 18px rgba(70, 140, 255, 1);
 }
 
 .speed-range::-moz-range-track {
@@ -188,8 +292,10 @@ html.light .panel {
   height: 22px;
   border-radius: 999px;
   background: #ffffff;
-  border: 4px solid #002861;
-  box-shadow: 0 0 0 5px color-mix(in srgb, #002861 28%, transparent);
+  border: 3px solid #2a6adf;
+  box-shadow:
+    0 0 0 4px rgba(47, 116, 255, 0.3),
+    0 0 14px rgba(70, 140, 255, 0.85);
   cursor: pointer;
 }
 
@@ -208,8 +314,10 @@ html.light .panel {
     animation: none;
   }
 
+  .panel,
   .btn-convert,
-  .btn-download {
+  .btn-download,
+  .speed-range::-webkit-slider-thumb {
     transition: none;
   }
 }
