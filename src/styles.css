@@ -57,8 +57,8 @@ html.light {
   --canvas: #eef3fa;
   --card: #ffffff;
   --well: #f3f7fd;
-  --ink: #0d1526;
-  --muted: #3d4d66;
+  --ink: #000000;
+  --muted: #1f2937;
   --line: #8eb4ef;
   --dash: #9db6dc;
 
@@ -110,6 +110,72 @@ html.light {
     outline: 2px solid #6aa2ff;
     outline-offset: 3px;
   }
+}
+
+/* Brand & App Title ("thisisummam" & "audio playback speed changer") */
+.brand-title,
+.app-title {
+  color: var(--ink);
+  transition: color 180ms ease;
+}
+
+html.light .brand-title,
+html.light .app-title,
+html.light header :is(h1, h2, p, span):not(button):not(button *) {
+  color: #000000;
+}
+
+/* Tombol Toggle Bright / Dark Mode dengan warna Navy sesuai palet */
+.btn-theme,
+.theme-toggle {
+  color: #ffffff;
+  border: 1.5px solid #2a6adf;
+  background: linear-gradient(180deg, #12306a 0%, #0a1c40 52%, #050b16 100%);
+  box-shadow:
+    0 0 0 1px rgba(110, 160, 255, 0.28),
+    0 0 14px rgba(40, 120, 255, 0.45),
+    inset 0 1px 0 rgba(190, 215, 255, 0.25);
+  transition:
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.btn-theme:hover,
+.theme-toggle:hover {
+  filter: brightness(1.14);
+  border-color: #6aa2ff;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(150, 190, 255, 0.4),
+    0 0 18px rgba(47, 116, 255, 0.65),
+    inset 0 1px 0 rgba(190, 215, 255, 0.35);
+}
+
+.btn-theme:active,
+.theme-toggle:active {
+  transform: translateY(0) scale(0.98);
+}
+
+html.light .btn-theme,
+html.light .theme-toggle {
+  color: #ffffff;
+  border-color: #2b6bff;
+  background: linear-gradient(180deg, #17386f 0%, #0d1f42 55%, #071226 100%);
+  box-shadow:
+    0 0 0 1px rgba(43, 107, 255, 0.25),
+    0 6px 16px rgba(13, 21, 38, 0.22),
+    inset 0 1px 0 rgba(142, 180, 239, 0.25);
+}
+
+html.light .btn-theme:hover,
+html.light .theme-toggle:hover {
+  filter: brightness(1.12);
+  border-color: #1d4fd7;
+  box-shadow:
+    0 0 0 1px rgba(43, 107, 255, 0.35),
+    0 8px 20px rgba(29, 79, 215, 0.28);
 }
 
 /* Panel dengan efek border biru menyala & outer glow */
@@ -315,6 +381,8 @@ html.light .btn-download:not(:disabled) {
   }
 
   .panel,
+  .btn-theme,
+  .theme-toggle,
   .btn-convert,
   .btn-download,
   .speed-range::-webkit-slider-thumb {
