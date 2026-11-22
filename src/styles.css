@@ -21,7 +21,6 @@
   --color-danger: var(--danger);
   --color-track: var(--track);
   --color-navy: var(--navy);
-  --color-navy-light: var(--navy-light);
 }
 
 :root {
@@ -33,12 +32,6 @@
   --muted: #c5ccd8;
   --line: #2a6adf;
   --dash: #31486f;
-
-  /* Navy palette (selaras dengan .btn-convert & .btn-download) */
-  --navy: #0a1c40;
-  --navy-deep: #071226;
-  --navy-light: #12306a;
-  --navy-border: #1c4d96;
 
   /* Glow & Lighting variables */
   --panel-glow: rgba(40, 120, 255, 0.62);
@@ -56,6 +49,7 @@
   --teal: #2a6adf;
   --danger: #ffb4b4;
   --track: #17386f;
+  --navy: #0a1c40;
   --wave-1: #2a6adf;
   --wave-2: #6aa2ff;
   color-scheme: dark;
@@ -65,16 +59,10 @@ html.light {
   --canvas: #eef3fa;
   --card: #ffffff;
   --well: #f3f7fd;
-  --ink: #0d1526;
+  --ink: #000000;
   --muted: #3d4d66;
   --line: #8eb4ef;
   --dash: #9db6dc;
-
-  /* Navy palette untuk bright mode */
-  --navy: #0a1c40;
-  --navy-deep: #071226;
-  --navy-light: #12306a;
-  --navy-border: #1c4d96;
 
   /* Light mode soft glow */
   --panel-glow: rgba(70, 130, 230, 0.22);
@@ -90,6 +78,7 @@ html.light {
   --teal: #2b6bff;
   --danger: #b42318;
   --track: #c5d4ea;
+  --navy: #0a1c40;
   --wave-1: #2b6bff;
   --wave-2: #7eb0ff;
   color-scheme: light;
@@ -126,80 +115,88 @@ html.light {
   }
 }
 
-/* 1. Teks "thisisummam" & "audio playback speed changer" menjadi hitam saat bright mode */
-html.light header :is(h1, h2, h3, p, span):not(button *),
-html.light :is(h1, .brand-subtitle, .brand-title):not(.panel *),
-html.light :is(p, span):has(+ h1):not(.panel *) {
-  color: #000000 !important;
+/* Memastikan teks brand & judul ("thisisummam" / "audio playback speed changer") menjadi hitam di bright mode */
+html.light header,
+html.light header h1,
+html.light header p,
+html.light header span,
+html.light header .text-white,
+html.light header .text-muted,
+html.light .brand-title,
+html.light .app-subtitle {
+  color: #000000;
 }
 
-/* 2. Tombol toggle Dark/Bright mode berwarna navy sesuai color palette */
-.theme-toggle,
-header button[aria-label*="mode" i],
-header button[aria-label*="theme" i],
-header button[role="switch"],
-header > button:last-of-type,
-header div > button:last-of-type {
-  color: #ffffff !important;
-  border: 1.5px solid var(--navy-border) !important;
-  background: linear-gradient(
-    180deg,
-    var(--navy-light) 0%,
-    var(--navy) 52%,
-    var(--navy-deep) 100%
-  ) !important;
+/* Toggle switch Dark / Bright mode (pill container + tombol bulat navy saat terpilih) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  background: var(--well);
+  border: 1px solid var(--line);
   box-shadow:
-    0 0 0 1px rgba(110, 160, 255, 0.28),
-    0 4px 14px rgba(7, 18, 38, 0.45),
-    inset 0 1px 0 rgba(190, 215, 255, 0.22) !important;
+    0 0 0 1px rgba(42, 106, 223, 0.2),
+    0 0 14px var(--panel-glow-soft);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+html.light .theme-toggle {
+  background: #ffffff;
+  border-color: rgba(142, 180, 239, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(90, 140, 230, 0.16),
+    0 6px 18px rgba(30, 70, 150, 0.08),
+    0 0 16px var(--panel-glow);
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
   transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
     box-shadow 180ms ease,
-    filter 180ms ease,
-    transform 180ms ease,
-    border-color 180ms ease;
+    transform 180ms ease;
 }
 
-.theme-toggle:hover,
-header button[aria-label*="mode" i]:hover,
-header button[aria-label*="theme" i]:hover,
-header button[role="switch"]:hover,
-header > button:last-of-type:hover,
-header div > button:last-of-type:hover {
-  filter: brightness(1.14);
-  border-color: #2a6adf !important;
-  transform: translateY(-1px);
+.theme-toggle-btn:hover:not(.active):not([aria-pressed="true"]):not([data-active="true"]) {
+  color: var(--ink);
+  background: rgba(42, 106, 223, 0.1);
 }
 
-.theme-toggle:active,
-header button[aria-label*="mode" i]:active,
-header button[aria-label*="theme" i]:active,
-header button[role="switch"]:active,
-header > button:last-of-type:active,
-header div > button:last-of-type:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Thumb / indikator lingkaran aktif di dalam switch toggle */
-.theme-toggle-thumb,
-header button[role="switch"] > span[aria-hidden="true"],
-header button[aria-label*="mode" i] > span[aria-hidden="true"],
-header button[aria-label*="theme" i] > span[aria-hidden="true"] {
-  background: linear-gradient(180deg, #1d468f 0%, #17386f 100%) !important;
-  border: 1px solid #4d86f5 !important;
+/* State terpilih (selected) menggunakan palet navy */
+.theme-toggle-btn.active,
+.theme-toggle-btn[aria-pressed="true"],
+.theme-toggle-btn[data-active="true"],
+.theme-toggle-btn[data-state="active"] {
+  color: #ffffff;
+  background: linear-gradient(180deg, #12306a 0%, #0a1c40 100%);
+  border-color: #2a6adf;
   box-shadow:
-    0 0 10px rgba(42, 106, 223, 0.55),
-    inset 0 1px 0 rgba(190, 215, 255, 0.3) !important;
-  transition: transform 180ms ease, background 180ms ease;
+    0 0 0 1px rgba(110, 160, 255, 0.25),
+    0 0 12px rgba(42, 106, 223, 0.5);
 }
 
-/* Warna ikon bulan & matahari di dalam tombol navy agar tetap kontras */
-.theme-toggle svg,
-header button[aria-label*="mode" i] svg,
-header button[aria-label*="theme" i] svg,
-header button[role="switch"] svg,
-header > button:last-of-type svg,
-header div > button:last-of-type svg {
-  color: #ffffff !important;
+html.light .theme-toggle-btn.active,
+html.light .theme-toggle-btn[aria-pressed="true"],
+html.light .theme-toggle-btn[data-active="true"],
+html.light .theme-toggle-btn[data-state="active"] {
+  color: #ffffff;
+  background: linear-gradient(180deg, #12306a 0%, #0a1c40 100%);
+  border-color: #17386f;
+  box-shadow:
+    0 4px 10px rgba(10, 28, 64, 0.28),
+    0 0 10px rgba(23, 56, 111, 0.22);
 }
 
 /* Panel dengan efek border biru menyala & outer glow */
@@ -406,7 +403,7 @@ html.light .btn-download:not(:disabled) {
 
   .panel,
   .theme-toggle,
-  .theme-toggle-thumb,
+  .theme-toggle-btn,
   .btn-convert,
   .btn-download,
   .speed-range::-webkit-slider-thumb {
